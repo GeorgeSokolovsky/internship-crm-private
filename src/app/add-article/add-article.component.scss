@@ -1,0 +1,16 @@
+.add-article-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 60px;
+}
+  
+.add-article-container > * {
+    min-width: 50%;
+    flex-direction: row;
+}
+
+.add-article-container textarea {
+    height: 200px;
+}

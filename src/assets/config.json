@@ -1,0 +1,5 @@
+{
+    "API": {
+        "ARTICLE_POST": "http://localhost:3000/article"
+    }
+}
