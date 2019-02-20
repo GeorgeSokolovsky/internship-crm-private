@@ -5,7 +5,6 @@ import * as config from '../../assets/config.json';
 import { httpOptions } from '../constants';
 import { Observable } from 'rxjs';
 
-
 @Injectable()
 export class AddArticleService {
     constructor(private httpClient: HttpClient) {}

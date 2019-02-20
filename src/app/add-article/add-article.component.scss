@@ -1,4 +1,8 @@
-.add-article-container {
+:host {
+    display: block;
+}
+
+:host > form {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -6,11 +10,6 @@
     margin-top: 60px;
 }
   
-.add-article-container > * {
+:host > form > * {
     min-width: 50%;
-    flex-direction: row;
-}
-
-.add-article-container textarea {
-    height: 200px;
 }

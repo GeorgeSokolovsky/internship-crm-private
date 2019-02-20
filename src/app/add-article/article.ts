@@ -1,5 +1,5 @@
-export class Article {
-    title: string;
-    content: string;
-    imgUrl: string;
+export interface Article {
+    title: string,
+    content: string,
+    imgUrl: string
 }
