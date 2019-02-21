@@ -7,7 +7,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "format": "prettier --write \"src/**/*.{ts,html}\"",
+    "format": "prettier --write \"src/**/*.{ts,html,scss}\"",
     "add-src": "git add src/",
     "e2e": "ng e2e"
   },
