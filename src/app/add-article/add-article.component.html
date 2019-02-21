@@ -1,0 +1,17 @@
+<form [formGroup]="addArticleForm" #formDirective="ngForm" (ngSubmit)="addArticle(formDirective)">
+    <mat-form-field>
+      <input matInput placeholder="Title" formControlName="title">
+      <mat-hint *ngIf="isFieldInvalid('title')">This field is required</mat-hint>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <textarea matInput placeholder="Content" formControlName="content"></textarea>
+      <mat-hint *ngIf="isFieldInvalid('content')">This field is required, 10 - 250 symbols</mat-hint>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <input matInput placeholder="Image link" formControlName="imgUrl">
+    </mat-form-field>
+    <button mat-button color="primary" [disabled]="addArticleForm.invalid">Add</button>
+    <mat-hint>{{ addResult }}</mat-hint>     
+</form>

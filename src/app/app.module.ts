@@ -1,3 +1,6 @@
+import { HttpClientModule } from '@angular/common/http';
+import { MenuModule } from './menu/menu.module';
+import { AddArticleModule } from './add-article/add-article.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -6,10 +9,13 @@ import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
+    MenuModule,
+    AddArticleModule,
     AppRoutingModule
   ],
   providers: [],
