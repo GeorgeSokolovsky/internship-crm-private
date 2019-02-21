@@ -1,6 +1,5 @@
 import { MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { AddArticleComponent } from './add-article.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,9 +12,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         MatButtonModule,
         MatFormFieldModule,
         MatInputModule,
-        HttpClientModule,
         ReactiveFormsModule,
         BrowserAnimationsModule
+    ],
+    exports: [
+        AddArticleComponent
     ]
 })
 export class AddArticleModule {}

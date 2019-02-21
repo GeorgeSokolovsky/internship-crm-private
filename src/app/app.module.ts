@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { MenuModule } from './menu/menu.module';
 import { AddArticleModule } from './add-article/add-article.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -12,6 +13,7 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     MenuModule,
     AddArticleModule,
     AppRoutingModule
