@@ -15,7 +15,6 @@ import { Subject } from 'rxjs';
 export class AddArticleComponent implements OnDestroy{
 
   addArticleForm: FormGroup;
-  formControls;
   private readonly destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(private addArticleService: AddArticleService) { 
@@ -24,8 +23,6 @@ export class AddArticleComponent implements OnDestroy{
       content: new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(250)]),
       imgUrl: new FormControl('')
     });
-    
-    this.formControls = this.addArticleForm.controls;
   }
 
   addArticle(formDirective: FormGroupDirective) {
@@ -35,8 +32,9 @@ export class AddArticleComponent implements OnDestroy{
   }
 
   isFieldInvalid(formControlName: string): boolean {
-    return this.formControls[formControlName].touched 
-           && this.formControls[formControlName].invalid;
+    const {touched, invalid} = this.addArticleForm.get(formControlName);
+
+    return touched && invalid
   }
 
   ngOnDestroy() {

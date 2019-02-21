@@ -15,8 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         MatInputModule,
         HttpClientModule,
         ReactiveFormsModule,
-        FormsModule,
-        BrowserAnimationsModule,
+        BrowserAnimationsModule
     ]
 })
 export class AddArticleModule {}
