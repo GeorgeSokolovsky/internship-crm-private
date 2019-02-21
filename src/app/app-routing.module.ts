@@ -4,14 +4,11 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   { path: 'add', component: AddArticleComponent },
-  { path: '',
-    redirectTo: '/add',
-    pathMatch: 'full'
-  }
+  { path: '', redirectTo: '/add', pathMatch: 'full' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

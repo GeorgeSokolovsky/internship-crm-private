@@ -1,15 +1,15 @@
 :host {
-    display: block;
+  display: block;
 }
 
 :host > form {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 60px;
 }
-  
+
 :host > form > * {
-    min-width: 50%;
+  min-width: 50%;
 }

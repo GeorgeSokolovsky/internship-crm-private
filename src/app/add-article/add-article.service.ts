@@ -7,9 +7,13 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class AddArticleService {
-    constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {}
 
-    addArticle(article: Article): Observable<Article> {
-        return this.httpClient.post<Article>(config.API.ARTICLE_POST, article, httpOptions);
-    }
+  addArticle(article: Article): Observable<Article> {
+    return this.httpClient.post<Article>(
+      config.API.ARTICLE_POST,
+      article,
+      httpOptions,
+    );
+  }
 }
