@@ -1,4 +1,4 @@
-import { MaterialModule } from './../material.module';
+import { MatMenuModule, MatButtonModule } from '@angular/material';
 import { NgModule } from '@angular/core';
 import { MenuComponent } from './menu.component';
 
@@ -7,10 +7,10 @@ import { MenuComponent } from './menu.component';
         MenuComponent
     ],
     imports: [
-        MaterialModule
+        MatMenuModule, MatButtonModule
     ],
     exports: [
         MenuComponent
     ]
 })
-export class MenuModule{}
+export class MenuModule {}

@@ -1,4 +1,4 @@
-import { MaterialModule } from './../material.module';
+import { MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -10,11 +10,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         AddArticleComponent
     ],
     imports: [
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
         HttpClientModule,
         ReactiveFormsModule,
         FormsModule,
-        MaterialModule,
         BrowserAnimationsModule,
     ]
 })
-export class AddArticleModule{}
+export class AddArticleModule {}
