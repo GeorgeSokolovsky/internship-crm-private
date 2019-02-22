@@ -11,7 +11,10 @@
     "add-src": "git add src/",
     "e2e": "ng e2e"
   },
-  "pre-commit": ["format", "add-src"],
+  "pre-commit": [
+    "format",
+    "add-src"
+  ],
   "private": true,
   "dependencies": {
     "@angular/animations": "^7.2.5",

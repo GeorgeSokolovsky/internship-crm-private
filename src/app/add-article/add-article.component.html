@@ -1,8 +1,4 @@
-<form
-  [formGroup]="addArticleForm"
-  #formDirective="ngForm"
-  (ngSubmit)="addArticle(formDirective)"
->
+<form [formGroup]="addArticleForm" (ngSubmit)="addArticle(formDirective)">
   <mat-form-field>
     <input matInput placeholder="Title" formControlName="title" />
     <mat-hint *ngIf="isFieldInvalid('title')">This field is required</mat-hint>
@@ -20,10 +16,35 @@
   </mat-form-field>
 
   <mat-form-field>
+    <input
+      type="text"
+      placeholder="Choose category"
+      aria-label="Number"
+      matInput
+      formControlName="category"
+      [matAutocomplete]="auto"
+    />
+    <mat-autocomplete
+      autoActiveFirstOption
+      #auto="matAutocomplete"
+      [displayWith]="displayValue"
+    >
+      <mat-option
+        *ngFor="let option of (filteredOptions$ | async)"
+        [value]="option"
+      >
+        {{ option.name }}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-hint *ngIf="isFieldInvalid('category')"
+      >This field is required</mat-hint
+    >
+  </mat-form-field>
+
+  <mat-form-field>
     <input matInput placeholder="Image link" formControlName="imgUrl" />
   </mat-form-field>
   <button mat-button color="primary" [disabled]="addArticleForm.invalid">
     Add
   </button>
-  <mat-hint>{{ addResult }}</mat-hint>
 </form>

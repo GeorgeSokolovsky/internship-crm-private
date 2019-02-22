@@ -2,6 +2,7 @@ import {
   MatButtonModule,
   MatFormFieldModule,
   MatInputModule,
+  MatAutocompleteModule,
 } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
@@ -13,6 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     MatButtonModule,
     MatFormFieldModule,
+    MatAutocompleteModule,
     MatInputModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
