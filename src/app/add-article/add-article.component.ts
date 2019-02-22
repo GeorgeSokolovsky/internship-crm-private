@@ -8,8 +8,14 @@ import {
   ChangeDetectionStrategy,
   OnDestroy,
 } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import {
+  FormGroup,
+  Validators,
+  FormBuilder,
+  FormControl,
+} from '@angular/forms';
 import { Subject, Observable } from 'rxjs';
+
 @Component({
   selector: 'app-add-article',
   templateUrl: './add-article.component.html',
@@ -22,7 +28,7 @@ export class AddArticleComponent implements OnInit, OnDestroy {
   categories: CategorySearch[] = [];
   filteredOptions$: Observable<CategorySearch[]>;
 
-  private readonly destroy$: Subject<boolean> = new Subject<boolean>();
+  private readonly destroy$ = new Subject<boolean>();
 
   constructor(
     private addArticleService: AddArticleService,
@@ -54,9 +60,9 @@ export class AddArticleComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.addArticleForm.reset();
-        for (let key in this.addArticleForm.controls) {
-          this.addArticleForm.controls[key].setErrors(null);
-        }
+        Object.values(this.addArticleForm.controls).forEach(control =>
+          control.setErrors(null),
+        );
       });
   }
 
@@ -66,17 +72,16 @@ export class AddArticleComponent implements OnInit, OnDestroy {
     return touched && invalid;
   }
 
-  displayValue(category: CategorySearch) {
-    return category ? category.name : '';
+  displayValue(category: CategorySearch): string {
+    return category && category.name;
   }
 
   ngOnInit() {
     const category = this.addArticleForm.get('category');
+
     this.filteredOptions$ = category.valueChanges.pipe(
-      tap(() => (this.categories.length = 0)),
       debounceTime(SEARCH_DEBOUNCE_TIME),
       switchMap(() => this.addArticleService.getCategories(category.value)),
-      takeUntil(this.destroy$),
     );
   }
 

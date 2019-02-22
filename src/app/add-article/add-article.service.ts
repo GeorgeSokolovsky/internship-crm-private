@@ -1,3 +1,4 @@
+import { getQuery } from './../untils';
 import { switchMap, toArray, map } from 'rxjs/operators';
 import { CATEGORY_SEARCH_LIMIN } from './../constants';
 import { CategorySearch } from './category-search';
@@ -23,10 +24,10 @@ export class AddArticleService {
   getCategories(search: string): Observable<CategorySearch[]> {
     return this.httpClient
       .get<CategorySearch[]>(
-        `${
-          config.API.CATEGORY_GET
-        }?search=${search}&limit=${CATEGORY_SEARCH_LIMIN}`,
+        config.API.CATEGORY_GET + getQuery({ search, limit: 10 }),
       )
-      .pipe(map(data => data.map(el => ({ _id: el._id, name: el.name }))));
+      .pipe(
+        map(categories => categories.map(({ _id, name }) => ({ _id, name }))),
+      );
   }
 }
