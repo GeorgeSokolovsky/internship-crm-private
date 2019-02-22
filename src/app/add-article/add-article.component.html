@@ -1,4 +1,4 @@
-<form [formGroup]="addArticleForm" (ngSubmit)="addArticle(formDirective)">
+<form [formGroup]="addArticleForm" (ngSubmit)="addArticle()">
   <mat-form-field>
     <input matInput placeholder="Title" formControlName="title" />
     <mat-hint *ngIf="isFieldInvalid('title')">This field is required</mat-hint>

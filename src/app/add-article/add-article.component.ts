@@ -1,5 +1,5 @@
 import { SEARCH_DEBOUNCE_TIME } from './../constants';
-import { Category } from './category';
+import { CategorySearch } from './category-search';
 import { takeUntil, switchMap, tap, debounceTime } from 'rxjs/operators';
 import { AddArticleService } from './add-article.service';
 import {
@@ -19,8 +19,8 @@ import { Subject, Observable } from 'rxjs';
 })
 export class AddArticleComponent implements OnInit, OnDestroy {
   addArticleForm: FormGroup;
-  categories: Category[] = [];
-  filteredOptions$: Observable<Category[]>;
+  categories: CategorySearch[] = [];
+  filteredOptions$: Observable<CategorySearch[]>;
 
   private readonly destroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -44,9 +44,10 @@ export class AddArticleComponent implements OnInit, OnDestroy {
   }
 
   addArticle() {
-    const { title, content, category, imgUrl } = this.addArticleForm.value;
-    const { _id } = category;
-    const article = { title, content, category: _id, imgUrl };
+    const {
+      category: { _id },
+    } = this.addArticleForm.value;
+    const article = { ...this.addArticleForm.value, category: _id };
 
     this.addArticleService
       .addArticle(article)
@@ -65,7 +66,7 @@ export class AddArticleComponent implements OnInit, OnDestroy {
     return touched && invalid;
   }
 
-  displayValue(category: Category) {
+  displayValue(category: CategorySearch) {
     return category ? category.name : '';
   }
 

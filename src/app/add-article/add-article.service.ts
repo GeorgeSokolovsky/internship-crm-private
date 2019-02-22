@@ -1,6 +1,6 @@
 import { switchMap, toArray, map } from 'rxjs/operators';
 import { CATEGORY_SEARCH_LIMIN } from './../constants';
-import { Category } from './category';
+import { CategorySearch } from './category-search';
 import { Article } from './article';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -20,9 +20,9 @@ export class AddArticleService {
     );
   }
 
-  getCategories(search: string): Observable<Category[]> {
+  getCategories(search: string): Observable<CategorySearch[]> {
     return this.httpClient
-      .get<Category[]>(
+      .get<CategorySearch[]>(
         `${
           config.API.CATEGORY_GET
         }?search=${search}&limit=${CATEGORY_SEARCH_LIMIN}`,
