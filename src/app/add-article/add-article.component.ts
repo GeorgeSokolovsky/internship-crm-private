@@ -1,6 +1,7 @@
-import { takeUntil } from 'rxjs/operators';
+import { SEARCH_DEBOUNCE_TIME } from './../constants';
+import { CategorySearch } from './category-search';
+import { takeUntil, switchMap, tap, debounceTime } from 'rxjs/operators';
 import { AddArticleService } from './add-article.service';
-import { Article } from './article';
 import {
   Component,
   OnInit,
@@ -9,11 +10,11 @@ import {
 } from '@angular/core';
 import {
   FormGroup,
-  FormControl,
   Validators,
-  FormGroupDirective,
+  FormBuilder,
+  FormControl,
 } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-add-article',
@@ -22,33 +23,66 @@ import { Subject } from 'rxjs';
   providers: [AddArticleService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddArticleComponent implements OnDestroy {
+export class AddArticleComponent implements OnInit, OnDestroy {
   addArticleForm: FormGroup;
-  private readonly destroy$: Subject<boolean> = new Subject<boolean>();
+  categories: CategorySearch[] = [];
+  filteredOptions$: Observable<CategorySearch[]>;
 
-  constructor(private addArticleService: AddArticleService) {
-    this.addArticleForm = new FormGroup({
-      title: new FormControl('', [Validators.required]),
-      content: new FormControl('', [
-        Validators.required,
-        Validators.minLength(10),
-        Validators.maxLength(250),
-      ]),
-      imgUrl: new FormControl(''),
+  private readonly destroy$ = new Subject<boolean>();
+
+  constructor(
+    private addArticleService: AddArticleService,
+    private formBuilder: FormBuilder,
+  ) {
+    this.addArticleForm = this.formBuilder.group({
+      title: ['', Validators.required],
+      content: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(250),
+        ],
+      ],
+      category: ['', [Validators.required]],
+      imgUrl: [''],
     });
   }
 
-  addArticle(formDirective: FormGroupDirective) {
+  addArticle() {
+    const {
+      category: { _id },
+    } = this.addArticleForm.value;
+    const article = { ...this.addArticleForm.value, category: _id };
+
     this.addArticleService
-      .addArticle(this.addArticleForm.value)
+      .addArticle(article)
       .pipe(takeUntil(this.destroy$))
-      .subscribe(() => formDirective.resetForm());
+      .subscribe(() => {
+        this.addArticleForm.reset();
+        Object.values(this.addArticleForm.controls).forEach(control =>
+          control.setErrors(null),
+        );
+      });
   }
 
   isFieldInvalid(formControlName: string): boolean {
     const { touched, invalid } = this.addArticleForm.get(formControlName);
 
     return touched && invalid;
+  }
+
+  displayValue(category: CategorySearch): string {
+    return category && category.name;
+  }
+
+  ngOnInit() {
+    const category = this.addArticleForm.get('category');
+
+    this.filteredOptions$ = category.valueChanges.pipe(
+      debounceTime(SEARCH_DEBOUNCE_TIME),
+      switchMap(() => this.addArticleService.getCategories(category.value)),
+    );
   }
 
   ngOnDestroy() {

@@ -1,5 +1,7 @@
 {
     "API": {
-        "ARTICLE_POST": "http://localhost:3000/article"
+        "ARTICLE_POST": "http://localhost:3000/article",
+        "CATEGORY_GET": "http://localhost:3000/category",
+        "CATEGORY_POST": "http://localhost:3000/category"
     }
 }

@@ -1,0 +1,13 @@
+<form [formGroup]="addCategoryForm" (ngSubmit)="addCategory()">
+  <mat-form-field>
+    <textarea
+      matInput
+      placeholder="Category name"
+      formControlName="name"
+    ></textarea>
+    <mat-hint *ngIf="isFieldInvalid('name')">This field is required</mat-hint>
+  </mat-form-field>
+  <button mat-button color="primary" [disabled]="addCategoryForm.invalid">
+    Add
+  </button>
+</form>

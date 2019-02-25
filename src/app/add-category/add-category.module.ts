@@ -2,23 +2,21 @@ import {
   MatButtonModule,
   MatFormFieldModule,
   MatInputModule,
-  MatAutocompleteModule,
 } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { AddArticleComponent } from './add-article.component';
+import { AddCategoryComponent } from './add-category.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
-  declarations: [AddArticleComponent],
+  declarations: [AddCategoryComponent],
   imports: [
     MatButtonModule,
     MatFormFieldModule,
-    MatAutocompleteModule,
     MatInputModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
   ],
-  exports: [AddArticleComponent],
+  exports: [AddCategoryComponent],
 })
-export class AddArticleModule {}
+export class AddCategoryModule {}
