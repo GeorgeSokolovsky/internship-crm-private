@@ -6,11 +6,11 @@ import {
 } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { AddArticleComponent } from './add-article.component';
+import { ArticleEditorComponent } from './article-editor.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
-  declarations: [AddArticleComponent],
+  declarations: [ArticleEditorComponent],
   imports: [
     MatButtonModule,
     MatFormFieldModule,
@@ -19,6 +19,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ReactiveFormsModule,
     BrowserAnimationsModule,
   ],
-  exports: [AddArticleComponent],
+  exports: [ArticleEditorComponent],
 })
-export class AddArticleModule {}
+export class ArticleEditorModule {}
