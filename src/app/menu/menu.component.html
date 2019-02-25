@@ -1,5 +1,6 @@
 <div class="menu-container">
   <button mat-button [matMenuTriggerFor]="menu">Add</button>
+  <button mat-button (click)="navigate('/view')">View</button>
   <button mat-button>Log out</button>
   <mat-menu #menu="matMenu">
     <button mat-menu-item router (click)="navigate('/article')">Article</button>

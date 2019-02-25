@@ -1,3 +1,4 @@
+import { ArticlesModule } from './articles/articles.module';
 import { AddCategoryModule } from './add-category/add-category.module';
 import { HttpClientModule } from '@angular/common/http';
 import { MenuModule } from './menu/menu.module';
@@ -14,6 +15,7 @@ import { AppComponent } from './app.component';
     BrowserModule,
     HttpClientModule,
     MenuModule,
+    ArticlesModule,
     AddArticleModule,
     AddCategoryModule,
     AppRoutingModule,

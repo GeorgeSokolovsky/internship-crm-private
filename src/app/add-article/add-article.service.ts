@@ -1,8 +1,7 @@
-import { getQuery } from './../untils';
-import { switchMap, toArray, map } from 'rxjs/operators';
-import { CATEGORY_SEARCH_LIMIN } from './../constants';
+import { getQuery } from '../utils';
+import { map } from 'rxjs/operators';
 import { CategorySearch } from './category-search';
-import { Article } from './article';
+import { AddArticle } from './add-article';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as config from '../../assets/config.json';
@@ -13,12 +12,24 @@ import { Observable, from } from 'rxjs';
 export class AddArticleService {
   constructor(private httpClient: HttpClient) {}
 
-  addArticle(article: Article): Observable<Article> {
-    return this.httpClient.post<Article>(
+  addArticle(article: AddArticle): Observable<AddArticle> {
+    return this.httpClient.post<AddArticle>(
       config.API.ARTICLE_POST,
       article,
       httpOptions,
     );
+  }
+
+  updateArticle(id: string, article: AddArticle): Observable<AddArticle> {
+    return this.httpClient.put<AddArticle>(
+      `${config.API.ARTICLE_PUT}/${id}`,
+      article,
+      httpOptions,
+    );
+  }
+
+  getArticleById(id: string): Observable<AddArticle> {
+    return this.httpClient.get<AddArticle>(`${config.API.ARTICLE_GET}/${id}`);
   }
 
   getCategories(search: string): Observable<CategorySearch[]> {
