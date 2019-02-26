@@ -1,5 +1,6 @@
 {
     "API": {
+        "AUTH_POST": "http://localhost:3000/auth",
         "ARTICLE_GET": "http://localhost:3000/article",
         "ARTICLE_POST": "http://localhost:3000/article",
         "ARTICLE_PUT": "http://localhost:3000/article",

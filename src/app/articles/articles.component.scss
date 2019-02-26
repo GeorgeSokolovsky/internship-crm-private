@@ -1,13 +1,5 @@
 :host {
-  display: block;
-  width: 95%;
-}
-
-:host > * {
-  width: 250px;
-  height: 100%;
-  float: left;
-  margin: 0 15px 15px 0;
-  text-align: center;
-  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
