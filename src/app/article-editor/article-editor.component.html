@@ -1,4 +1,4 @@
-<form [formGroup]="articleForm" (ngSubmit)="getAction()">
+<form [formGroup]="articleForm" (ngSubmit)="performAction()">
   <mat-form-field>
     <input matInput placeholder="Title" formControlName="title" />
     <mat-hint *ngIf="isFieldInvalid('title')">This field is required</mat-hint>
@@ -45,6 +45,6 @@
     <input matInput placeholder="Image link" formControlName="imgUrl" />
   </mat-form-field>
   <button mat-button color="primary" [disabled]="articleForm.invalid" ng->
-    {{ getButtonText() }}
+    {{ !this.articleId ? 'Add' : 'Update' }}
   </button>
 </form>

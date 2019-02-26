@@ -23,16 +23,16 @@ export class ArticleEditorComponent implements OnInit, OnDestroy {
   articleForm: FormGroup;
   categories: CategorySearch[] = [];
   filteredOptions$: Observable<CategorySearch[]>;
-
   articleId: string;
-
   private readonly destroy$ = new Subject<boolean>();
 
   constructor(
     private articleEditorService: ArticleEditorService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-  ) {
+  ) {}
+
+  ngOnInit() {
     this.articleForm = this.formBuilder.group({
       title: ['', Validators.required],
       content: [
@@ -46,58 +46,7 @@ export class ArticleEditorComponent implements OnInit, OnDestroy {
       category: ['', [Validators.required]],
       imgUrl: [''],
     });
-  }
 
-  addArticle() {
-    const {
-      category: { _id },
-    } = this.articleForm.value;
-    const article = { ...this.articleForm.value, category: _id };
-
-    this.articleEditorService
-      .addArticle(article)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.articleForm.reset();
-        Object.values(this.articleForm.controls).forEach(control =>
-          control.setErrors(null),
-        );
-      });
-  }
-
-  updateArticle() {
-    const {
-      category: { _id },
-    } = this.articleForm.value;
-    const article = { ...this.articleForm.value, category: _id };
-
-    this.articleEditorService
-      .updateArticle(this.articleId, article)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe();
-  }
-
-  isFieldInvalid(formControlName: string): boolean {
-    const { touched, invalid } = this.articleForm.get(formControlName);
-
-    return touched && invalid;
-  }
-
-  displayValue(category: CategorySearch): string {
-    return category && category.name;
-  }
-
-  getAction() {
-    return this.articleId === undefined
-      ? this.addArticle()
-      : this.updateArticle();
-  }
-
-  getButtonText() {
-    return this.articleId === undefined ? 'Add' : 'Update';
-  }
-
-  ngOnInit() {
     this.articleId = this.route.snapshot.params.id;
     if (this.articleId !== undefined) {
       this.articleEditorService
@@ -119,5 +68,48 @@ export class ArticleEditorComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  isFieldInvalid(formControlName: string): boolean {
+    const { touched, invalid } = this.articleForm.get(formControlName);
+
+    return touched && invalid;
+  }
+
+  displayValue(category: CategorySearch): string {
+    return category && category.name;
+  }
+
+  performAction() {
+    return !this.articleId ? this.addArticle() : this.updateArticle();
+  }
+
+  private addArticle() {
+    const {
+      category: { _id },
+    } = this.articleForm.value;
+    const article = { ...this.articleForm.value, category: _id };
+
+    this.articleEditorService
+      .addArticle(article)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.articleForm.reset();
+        Object.values(this.articleForm.controls).forEach(control =>
+          control.setErrors(null),
+        );
+      });
+  }
+
+  private updateArticle() {
+    const {
+      category: { _id },
+    } = this.articleForm.value;
+    const article = { ...this.articleForm.value, category: _id };
+
+    this.articleEditorService
+      .updateArticle(this.articleId, article)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe();
   }
 }

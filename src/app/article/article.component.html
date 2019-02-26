@@ -2,7 +2,10 @@
   <mat-card-header>
     <mat-card-title>{{ article.title }}</mat-card-title>
   </mat-card-header>
-  <img mat-card-image src="{{ article.imgUrl | defaultImage }}" />
+  <div class="img">
+    <img mat-card-image src="{{ article.imgUrl | defaultImage }}" />
+  </div>
+
   <mat-card-content>
     <p>
       {{ article.content }}

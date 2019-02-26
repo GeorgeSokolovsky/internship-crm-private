@@ -1,10 +1,4 @@
 :host {
   display: block;
-}
-
-:host > * {
-  height: 100%;
-  width: 25%;
-  display: flex;
-  flex-flow: column wrap;
+  width: 300px;
 }
