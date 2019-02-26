@@ -4,4 +4,15 @@
 
 .img {
   height: 250px;
+  position: relative;
+}
+
+.img > img {
+  width: 100%;
+  position: absolute;
+  margin: auto;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
 }
