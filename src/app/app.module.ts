@@ -12,9 +12,10 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SignUpModule } from './sign-up/sign-up.module';
+import { SignUpDialogComponent } from './sign-up-dialog/sign-up-dialog.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, SignUpDialogComponent],
   imports: [
     BrowserModule,
     HttpClientModule,

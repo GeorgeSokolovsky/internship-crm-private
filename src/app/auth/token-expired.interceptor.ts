@@ -24,17 +24,14 @@ export class TokenExpiredInterceptor implements HttpInterceptor {
     next: HttpHandler,
   ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
-      tap(
-        (event: HttpEvent<any>) => {},
-        (err: any) => {
-          if (err instanceof HttpErrorResponse) {
-            if (err.status === 401) {
-              localStorage.removeItem(lsTokenName);
-              this.router.navigateByUrl('/auth');
-            }
+      tap(null, (err: any) => {
+        if (err instanceof HttpErrorResponse) {
+          if (err.status === 401) {
+            localStorage.removeItem(lsTokenName);
+            this.router.navigateByUrl('/auth');
           }
-        },
-      ),
+        }
+      }),
     );
   }
 }
