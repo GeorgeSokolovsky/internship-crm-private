@@ -8,15 +8,3 @@ export const getQuery = (obj: object): string => {
   }
   return `?${query}`;
 };
-
-export const getHttpOptions = () => {
-  const {
-    token: { accessToken },
-  } = JSON.parse(localStorage.getItem(lsTokenName));
-  return {
-    headers: new HttpHeaders({
-      Authorization: `Bearer ${accessToken}`,
-      'Content-Type': 'application/json',
-    }),
-  };
-};

@@ -1,4 +1,3 @@
-import { getHttpOptions } from './../utils';
 import { getQuery } from '../utils';
 import { map } from 'rxjs/operators';
 import { CategorySearch } from './category-search';
@@ -17,7 +16,6 @@ export class ArticleEditorService {
     return this.httpClient.post<ArticleEditor>(
       config.API.ARTICLE_POST,
       article,
-      getHttpOptions(),
     );
   }
 
@@ -25,7 +23,6 @@ export class ArticleEditorService {
     return this.httpClient.put<ArticleEditor>(
       `${config.API.ARTICLE_PUT}/${id}`,
       article,
-      getHttpOptions(),
     );
   }
 

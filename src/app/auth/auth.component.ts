@@ -30,8 +30,6 @@ export class AuthComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    if (this.authService.isAuth()) this.router.navigateByUrl('/article');
-
     this.authForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -49,6 +47,10 @@ export class AuthComponent implements OnInit, OnDestroy {
         localStorage.setItem(lsTokenName, JSON.stringify(userAuth));
         this.router.navigateByUrl('/article');
       });
+  }
+
+  toSignUp() {
+    this.router.navigateByUrl('/signup');
   }
 
   isFieldInvalid(formControlName: string): boolean {

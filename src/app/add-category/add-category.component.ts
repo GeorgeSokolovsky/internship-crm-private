@@ -1,5 +1,3 @@
-import { Router } from '@angular/router';
-import { AuthService } from './../auth/auth.service';
 import { AddCategoryService } from './add-category.service';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
@@ -15,7 +13,7 @@ import { Subject } from 'rxjs';
   selector: 'app-add-category',
   templateUrl: './add-category.component.html',
   styleUrls: ['./add-category.component.scss'],
-  providers: [AddCategoryService, AuthService],
+  providers: [AddCategoryService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddCategoryComponent implements OnInit {
@@ -23,13 +21,10 @@ export class AddCategoryComponent implements OnInit {
   private readonly destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
-    private authService: AuthService,
     private addCategoryService: AddCategoryService,
     private formBuilder: FormBuilder,
-    private router: Router,
   ) {}
   ngOnInit() {
-    if (!this.authService.isAuth()) this.router.navigateByUrl('/auth');
     this.addCategoryForm = this.formBuilder.group({
       name: ['', [Validators.required]],
     });

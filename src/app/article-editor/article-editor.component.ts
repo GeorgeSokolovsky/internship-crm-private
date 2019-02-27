@@ -1,6 +1,5 @@
-import { AuthService } from './../auth/auth.service';
 import { SEARCH_DEBOUNCE_TIME, lsTokenName } from './../constants';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ArticleEditorService } from './article-editor.service';
 import { Observable, Subject } from 'rxjs';
 import { CategorySearch } from './category-search';
@@ -17,7 +16,7 @@ import { takeUntil, debounceTime, switchMap } from 'rxjs/operators';
   selector: 'app-article-editor',
   templateUrl: './article-editor.component.html',
   styleUrls: ['./article-editor.component.scss'],
-  providers: [ArticleEditorService, AuthService],
+  providers: [ArticleEditorService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArticleEditorComponent implements OnInit, OnDestroy {
@@ -29,15 +28,11 @@ export class ArticleEditorComponent implements OnInit, OnDestroy {
 
   constructor(
     private articleEditorService: ArticleEditorService,
-    private authService: AuthService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router,
   ) {}
 
   ngOnInit() {
-    if (!this.authService.isAuth()) this.router.navigateByUrl('/auth');
-
     this.articleForm = this.formBuilder.group({
       title: ['', Validators.required],
       content: [
@@ -90,12 +85,10 @@ export class ArticleEditorComponent implements OnInit, OnDestroy {
   }
 
   private addArticle() {
-    const author: string = JSON.parse(localStorage.getItem(lsTokenName)).token
-      .accessToken;
     const {
       category: { _id },
     } = this.articleForm.value;
-    const article = { ...this.articleForm.value, category: _id, author };
+    const article = { ...this.articleForm.value, category: _id };
 
     this.articleEditorService
       .addArticle(article)
@@ -109,12 +102,10 @@ export class ArticleEditorComponent implements OnInit, OnDestroy {
   }
 
   private updateArticle() {
-    const author: string = JSON.parse(localStorage.getItem(lsTokenName)).token
-      .accessToken;
     const {
       category: { _id },
     } = this.articleForm.value;
-    const article = { ...this.articleForm.value, category: _id, author };
+    const article = { ...this.articleForm.value, category: _id };
 
     this.articleEditorService
       .updateArticle(this.articleId, article)

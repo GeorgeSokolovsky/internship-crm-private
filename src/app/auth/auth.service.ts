@@ -1,13 +1,14 @@
-import { getHttpOptions } from './../utils';
 import { httpOptions, lsTokenName } from './../constants';
 import { UserAuth } from './user-auth';
 import { UserLogin } from './user-login';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import * as config from '../../assets/config.json';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthService {
   constructor(private http: HttpClient) {}
 
@@ -24,7 +25,10 @@ export class AuthService {
   }
 
   isAuth(): boolean {
-    const user: UserAuth = JSON.parse(localStorage.getItem(lsTokenName));
     return localStorage.hasOwnProperty(lsTokenName);
+  }
+
+  getToken(): string {
+    return JSON.parse(localStorage.getItem(lsTokenName)).token.accessToken;
   }
 }
