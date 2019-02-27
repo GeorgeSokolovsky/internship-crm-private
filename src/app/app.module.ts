@@ -15,7 +15,7 @@ import { SignUpModule } from './sign-up/sign-up.module';
 import { SignUpDialogComponent } from './sign-up-dialog/sign-up-dialog.component';
 
 @NgModule({
-  declarations: [AppComponent, SignUpDialogComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
