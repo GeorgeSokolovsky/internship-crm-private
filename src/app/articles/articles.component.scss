@@ -1,0 +1,10 @@
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+:host > * {
+  flex-basis: 21%;
+  margin-top: 20px;
+}

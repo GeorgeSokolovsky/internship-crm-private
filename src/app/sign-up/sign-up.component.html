@@ -1,0 +1,27 @@
+<form [formGroup]="signUpForm" (ngSubmit)="signUp()">
+  <mat-form-field>
+    <input matInput placeholder="E-mail" formControlName="email" />
+    <mat-hint *ngIf="isFieldInvalid('email')">This field is required</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input
+      type="password"
+      placeholder="Password"
+      matInput
+      formControlName="password"
+    />
+    <mat-hint *ngIf="isFieldInvalid('password')"
+      >This field is required</mat-hint
+    >
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Name" formControlName="name" />
+    <mat-hint *ngIf="isFieldInvalid('name')">This field is required</mat-hint>
+  </mat-form-field>
+
+  <button mat-button color="primary" [disabled]="signUpForm.invalid">
+    Sign Up
+  </button>
+</form>

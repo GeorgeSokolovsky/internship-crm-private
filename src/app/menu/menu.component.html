@@ -1,11 +1,11 @@
 <div class="menu-container">
   <button mat-button [matMenuTriggerFor]="menu">Add</button>
-  <button mat-button>Log out</button>
+  <button mat-button (click)="navigate('/view')">View</button>
+  <button mat-button (click)="logOut()">Log out</button>
   <mat-menu #menu="matMenu">
     <button mat-menu-item router (click)="navigate('/article')">Article</button>
     <button mat-menu-item router (click)="navigate('/category')">
       Category
     </button>
-    <button mat-menu-item>View</button>
   </mat-menu>
 </div>

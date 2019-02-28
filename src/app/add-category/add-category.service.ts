@@ -10,10 +10,6 @@ export class AddCategoryService {
   constructor(private httClient: HttpClient) {}
 
   addCategory(category: Category): Observable<Category> {
-    return this.httClient.post<Category>(
-      config.API.CATEGORY_POST,
-      category,
-      httpOptions,
-    );
+    return this.httClient.post<Category>(config.API.CATEGORY_POST, category);
   }
 }

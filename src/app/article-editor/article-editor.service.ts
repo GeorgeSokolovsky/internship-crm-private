@@ -1,8 +1,7 @@
-import { getQuery } from './../untils';
-import { switchMap, toArray, map } from 'rxjs/operators';
-import { CATEGORY_SEARCH_LIMIN } from './../constants';
+import { getQuery } from '../utils';
+import { map } from 'rxjs/operators';
 import { CategorySearch } from './category-search';
-import { Article } from './article';
+import { ArticleEditor } from './article-editor';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as config from '../../assets/config.json';
@@ -10,14 +9,26 @@ import { httpOptions } from '../constants';
 import { Observable, from } from 'rxjs';
 
 @Injectable()
-export class AddArticleService {
+export class ArticleEditorService {
   constructor(private httpClient: HttpClient) {}
 
-  addArticle(article: Article): Observable<Article> {
-    return this.httpClient.post<Article>(
+  addArticle(article: ArticleEditor): Observable<ArticleEditor> {
+    return this.httpClient.post<ArticleEditor>(
       config.API.ARTICLE_POST,
       article,
-      httpOptions,
+    );
+  }
+
+  updateArticle(id: string, article: ArticleEditor): Observable<ArticleEditor> {
+    return this.httpClient.put<ArticleEditor>(
+      `${config.API.ARTICLE_PUT}/${id}`,
+      article,
+    );
+  }
+
+  getArticleById(id: string): Observable<ArticleEditor> {
+    return this.httpClient.get<ArticleEditor>(
+      `${config.API.ARTICLE_GET}/${id}`,
     );
   }
 

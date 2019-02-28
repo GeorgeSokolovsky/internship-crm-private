@@ -1,4 +1,4 @@
-import { getQuery } from './untils';
+import { getQuery } from './utils';
 describe('getQuery tests', () => {
   it('positive test', () => {
     expect(getQuery({ search: 'test', limit: 10 })).toEqual(
