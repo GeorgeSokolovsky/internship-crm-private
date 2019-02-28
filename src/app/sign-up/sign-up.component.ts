@@ -1,4 +1,4 @@
-import { checkValidFormGroup } from './../utils';
+import { checkValidFormGroup, FieldErrorChecker } from './../utils';
 import { Subject, Observable } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {
@@ -24,7 +24,7 @@ import { Router } from '@angular/router';
 export class SignUpComponent implements OnInit, OnDestroy {
   signUpForm: FormGroup;
   private readonly destroy$ = new Subject<boolean>();
-  isFieldInvalid;
+  isFieldInvalid: FieldErrorChecker;
 
   constructor(
     private router: Router,

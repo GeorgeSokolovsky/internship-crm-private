@@ -1,4 +1,4 @@
-import { checkValidFormGroup } from './../utils';
+import { checkValidFormGroup, FieldErrorChecker } from './../utils';
 import { UserAuth } from './user-auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from './auth.service';
@@ -22,7 +22,7 @@ import { Router } from '@angular/router';
 export class AuthComponent implements OnInit, OnDestroy {
   authForm: FormGroup;
   private readonly destroy$: Subject<boolean> = new Subject<boolean>();
-  isFieldInvalid;
+  isFieldInvalid: FieldErrorChecker;
 
   constructor(
     private authService: AuthService,

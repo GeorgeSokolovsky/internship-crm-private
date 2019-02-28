@@ -1,3 +1,4 @@
+import { FieldErrorChecker } from './../utils';
 import { SEARCH_DEBOUNCE_TIME, lsTokenName } from './../constants';
 import { ActivatedRoute } from '@angular/router';
 import { ArticleEditorService } from './article-editor.service';
@@ -25,7 +26,7 @@ export class ArticleEditorComponent implements OnInit, OnDestroy {
   categories: CategorySearch[] = [];
   filteredOptions$: Observable<CategorySearch[]>;
   articleId: string;
-  isFieldInvalid;
+  isFieldInvalid: FieldErrorChecker;
 
   private readonly destroy$ = new Subject<boolean>();
 

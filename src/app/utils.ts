@@ -9,7 +9,7 @@ export const getQuery = (obj: object): string => {
   }
   return `?${query}`;
 };
-
+export type FieldErrorChecker = (formControlName: string) => boolean;
 export const checkValidFormGroup = (formGroup: FormGroup) => {
   return (formControlName: string): boolean => {
     const { touched, invalid } = formGroup.get(formControlName);

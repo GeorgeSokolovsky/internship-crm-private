@@ -1,4 +1,4 @@
-import { checkValidFormGroup } from './../utils';
+import { checkValidFormGroup, FieldErrorChecker } from './../utils';
 import { AddCategoryService } from './add-category.service';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
@@ -20,7 +20,7 @@ import { Subject } from 'rxjs';
 export class AddCategoryComponent implements OnInit {
   addCategoryForm: FormGroup;
   private readonly destroy$: Subject<boolean> = new Subject<boolean>();
-  isFieldInvalid;
+  isFieldInvalid: FieldErrorChecker;
 
   constructor(
     private addCategoryService: AddCategoryService,

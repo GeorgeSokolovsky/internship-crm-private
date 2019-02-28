@@ -13,7 +13,7 @@ import { SignUpComponent } from './sign-up.component';
 import { SignUpDialogComponent } from '../sign-up-dialog/sign-up-dialog.component';
 
 @NgModule({
-  declarations: [SignUpComponent],
+  declarations: [SignUpComponent, SignUpDialogComponent],
   imports: [
     RouterModule,
     MatDialogModule,
