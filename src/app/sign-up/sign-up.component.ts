@@ -1,3 +1,4 @@
+import { checkValidFormGroup } from './../utils';
 import { Subject, Observable } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {
@@ -23,6 +24,7 @@ import { Router } from '@angular/router';
 export class SignUpComponent implements OnInit, OnDestroy {
   signUpForm: FormGroup;
   private readonly destroy$ = new Subject<boolean>();
+  isFieldInvalid;
 
   constructor(
     private router: Router,
@@ -37,10 +39,13 @@ export class SignUpComponent implements OnInit, OnDestroy {
       password: ['', [Validators.required, Validators.minLength(6)]],
       name: ['', [Validators.required]],
     });
+
+    this.isFieldInvalid = checkValidFormGroup(this.signUpForm);
   }
 
   ngOnDestroy() {
-    this.destroy$.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   signUp() {
@@ -58,10 +63,5 @@ export class SignUpComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.router.navigateByUrl('auth');
       });
-  }
-  isFieldInvalid(formControlName: string): boolean {
-    const { touched, invalid } = this.signUpForm.get(formControlName);
-
-    return touched && invalid;
   }
 }

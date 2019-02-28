@@ -1,3 +1,4 @@
+import { checkValidFormGroup } from './../utils';
 import { AddCategoryService } from './add-category.service';
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {
@@ -19,6 +20,7 @@ import { Subject } from 'rxjs';
 export class AddCategoryComponent implements OnInit {
   addCategoryForm: FormGroup;
   private readonly destroy$: Subject<boolean> = new Subject<boolean>();
+  isFieldInvalid;
 
   constructor(
     private addCategoryService: AddCategoryService,
@@ -28,6 +30,8 @@ export class AddCategoryComponent implements OnInit {
     this.addCategoryForm = this.formBuilder.group({
       name: ['', [Validators.required]],
     });
+
+    this.isFieldInvalid = checkValidFormGroup(this.addCategoryForm);
   }
 
   addCategory() {
@@ -41,11 +45,5 @@ export class AddCategoryComponent implements OnInit {
           this.addCategoryForm.controls[key].setErrors(null);
         }
       });
-  }
-
-  isFieldInvalid(formControlName: string): boolean {
-    const { touched, invalid } = this.addCategoryForm.get(formControlName);
-
-    return touched && invalid;
   }
 }

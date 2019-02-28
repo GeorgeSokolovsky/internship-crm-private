@@ -1,3 +1,4 @@
+import { checkValidFormGroup } from './../utils';
 import { UserAuth } from './user-auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from './auth.service';
@@ -16,12 +17,12 @@ import { Router } from '@angular/router';
   selector: 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss'],
-  providers: [AuthService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AuthComponent implements OnInit, OnDestroy {
   authForm: FormGroup;
   private readonly destroy$: Subject<boolean> = new Subject<boolean>();
+  isFieldInvalid;
 
   constructor(
     private authService: AuthService,
@@ -34,9 +35,12 @@ export class AuthComponent implements OnInit, OnDestroy {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
+
+    this.isFieldInvalid = checkValidFormGroup(this.authForm);
   }
   ngOnDestroy() {
-    this.destroy$.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   auth() {
@@ -51,11 +55,5 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   toSignUp() {
     this.router.navigateByUrl('/signup');
-  }
-
-  isFieldInvalid(formControlName: string): boolean {
-    const { touched, invalid } = this.authForm.get(formControlName);
-
-    return touched && invalid;
   }
 }

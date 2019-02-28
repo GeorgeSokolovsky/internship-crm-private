@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { takeUntil, debounceTime, switchMap } from 'rxjs/operators';
+import { checkValidFormGroup } from '../utils';
 
 @Component({
   selector: 'app-article-editor',
@@ -24,6 +25,8 @@ export class ArticleEditorComponent implements OnInit, OnDestroy {
   categories: CategorySearch[] = [];
   filteredOptions$: Observable<CategorySearch[]>;
   articleId: string;
+  isFieldInvalid;
+
   private readonly destroy$ = new Subject<boolean>();
 
   constructor(
@@ -47,8 +50,10 @@ export class ArticleEditorComponent implements OnInit, OnDestroy {
       imgUrl: [''],
     });
 
+    this.isFieldInvalid = checkValidFormGroup(this.articleForm);
     this.articleId = this.route.snapshot.params.id;
-    if (this.articleId !== undefined) {
+
+    if (this.articleId) {
       this.articleEditorService
         .getArticleById(this.articleId)
         .pipe(takeUntil(this.destroy$))
@@ -68,12 +73,6 @@ export class ArticleEditorComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  isFieldInvalid(formControlName: string): boolean {
-    const { touched, invalid } = this.articleForm.get(formControlName);
-
-    return touched && invalid;
   }
 
   displayValue(category: CategorySearch): string {
