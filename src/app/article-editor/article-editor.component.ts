@@ -1,3 +1,7 @@
+import { getLoadArticle } from './../selectors/article.selectors';
+import { State } from './../state/state';
+import { Article } from './../models/article.model';
+import { Store } from '@ngrx/store';
 import { FieldErrorChecker } from './../utils';
 import { SEARCH_DEBOUNCE_TIME, lsTokenName } from './../constants';
 import { ActivatedRoute } from '@angular/router';
@@ -11,8 +15,9 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { takeUntil, debounceTime, switchMap } from 'rxjs/operators';
+import { takeUntil, debounceTime, switchMap, filter } from 'rxjs/operators';
 import { checkValidFormGroup } from '../utils';
+import * as articleActions from './../actions/article.actions';
 
 @Component({
   selector: 'app-article-editor',
@@ -27,6 +32,7 @@ export class ArticleEditorComponent implements OnInit, OnDestroy {
   filteredOptions$: Observable<CategorySearch[]>;
   articleId: string;
   isFieldInvalid: FieldErrorChecker;
+  article$: Observable<Article>;
 
   private readonly destroy$ = new Subject<boolean>();
 
@@ -34,6 +40,7 @@ export class ArticleEditorComponent implements OnInit, OnDestroy {
     private articleEditorService: ArticleEditorService,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
+    private store: Store<State>,
   ) {}
 
   ngOnInit() {
@@ -55,12 +62,11 @@ export class ArticleEditorComponent implements OnInit, OnDestroy {
     this.articleId = this.route.snapshot.params.id;
 
     if (this.articleId) {
-      this.articleEditorService
-        .getArticleById(this.articleId)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(article => {
-          this.articleForm.patchValue(article);
-        });
+      this.store.dispatch(new articleActions.LoadOne(this.articleId));
+      this.article$ = this.store.select(getLoadArticle);
+      this.article$
+        .pipe(filter(data => data !== null))
+        .subscribe(article => this.articleForm.patchValue(article));
     }
 
     const category = this.articleForm.get('category');
@@ -90,15 +96,12 @@ export class ArticleEditorComponent implements OnInit, OnDestroy {
     } = this.articleForm.value;
     const article = { ...this.articleForm.value, category: _id };
 
-    this.articleEditorService
-      .addArticle(article)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.articleForm.reset();
-        Object.values(this.articleForm.controls).forEach(control =>
-          control.setErrors(null),
-        );
-      });
+    this.store.dispatch(new articleActions.Add(article));
+
+    this.articleForm.reset();
+    Object.values(this.articleForm.controls).forEach(control =>
+      control.setErrors(null),
+    );
   }
 
   private updateArticle() {
@@ -107,9 +110,8 @@ export class ArticleEditorComponent implements OnInit, OnDestroy {
     } = this.articleForm.value;
     const article = { ...this.articleForm.value, category: _id };
 
-    this.articleEditorService
-      .updateArticle(this.articleId, article)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe();
+    this.store.dispatch(
+      new articleActions.Update({ id: this.articleId, article }),
+    );
   }
 }
