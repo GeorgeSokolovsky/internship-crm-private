@@ -2,12 +2,7 @@ import { ArticlesService } from './../articles/articles.service';
 import { ArticleEditorService } from './../article-editor/article-editor.service';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
-import {
-  ArticleActionTypes,
-  Add,
-  LoadOne,
-  Update,
-} from './../actions/article.actions';
+import { Add, LoadOne, Update } from './../actions/article.actions';
 import { switchMap, map, catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import * as articleActions from './../actions/article.actions';
@@ -28,7 +23,7 @@ export class ArticleEffects {
     switchMap(() =>
       this.articlesService.getArticles().pipe(
         map(articles => new articleActions.LoadAllSuccess(articles)),
-        catchError(() => of({ type: ArticleActionTypes.LOAD_ALL_FAIL })),
+        catchError(() => of(new articleActions.LoadAllFail())),
       ),
     ),
   );
@@ -39,7 +34,7 @@ export class ArticleEffects {
     switchMap((action: Add) =>
       this.articleEditorService.addArticle(action.payload).pipe(
         map((article: Article) => new articleActions.AddSuccess()),
-        catchError(() => of({ type: ArticleActionTypes.ADD_FAIL })),
+        catchError(() => of(new articleActions.AddedFail())),
       ),
     ),
   );
@@ -50,7 +45,7 @@ export class ArticleEffects {
     switchMap((action: LoadOne) =>
       this.articleEditorService.getArticleById(action.payload).pipe(
         map((article: Article) => new articleActions.LoadOneSuccess(article)),
-        catchError(() => of({ type: ArticleActionTypes.LOAD_ONE_FAIL })),
+        catchError(() => of(new articleActions.LoadOneFail())),
       ),
     ),
   );
@@ -63,7 +58,7 @@ export class ArticleEffects {
         .updateArticle(action.payload.id, action.payload.article)
         .pipe(
           map(() => new articleActions.UpdateSuccess()),
-          catchError(() => of({ type: ArticleActionTypes.UPDATE_FAIL })),
+          catchError(() => of(new articleActions.UpdateFail())),
         ),
     ),
   );
