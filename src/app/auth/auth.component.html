@@ -14,7 +14,7 @@
     <mat-hint *ngIf="isFieldInvalid('password')"
       >This field is required</mat-hint
     >
-    <mat-hint *ngIf="(isUserInvalid$ | async)">Incorrect</mat-hint>
+    <mat-hint *ngIf="(authError$ | async)">Incorrect</mat-hint>
   </mat-form-field>
 
   <button mat-button color="primary" [disabled]="authForm.invalid">

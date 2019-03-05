@@ -23,9 +23,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class AuthComponent implements OnInit, OnDestroy {
   authForm: FormGroup;
   private readonly destroy$: Subject<boolean> = new Subject<boolean>();
-  private readonly isUserInvalid$: Subject<boolean> = new Subject<boolean>();
   isFieldInvalid: FieldErrorChecker;
-  authError$: Observable<Error> = this.store.select(getAuthError);
+  authError$ = this.store.select(getAuthError);
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -46,14 +45,6 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   auth() {
-    this.authError$
-      .pipe(
-        tap(err => this.isUserInvalid$.next(err instanceof HttpErrorResponse)),
-        switchMap(() => this.isUserInvalid$),
-        takeUntil(this.destroy$),
-      )
-      .subscribe();
-
     this.store.dispatch(new authActions.Auth(this.authForm.value));
   }
 

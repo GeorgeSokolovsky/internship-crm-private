@@ -31,7 +31,7 @@ export class ArticleEditorComponent implements OnInit, OnDestroy {
   filteredOptions$: Observable<CategorySearch[]>;
   articleId: string;
   isFieldInvalid: FieldErrorChecker;
-  article$: Observable<Article> = this.store.select(getCurrentArticle);
+  article$ = this.store.select(getCurrentArticle);
 
   private readonly destroy$ = new Subject<boolean>();
 

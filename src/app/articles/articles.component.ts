@@ -13,7 +13,7 @@ import { Article } from '../models/article.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArticlesComponent implements OnInit {
-  articles$: Observable<Article[]> = this.store.select(getArticles);
+  articles$ = this.store.select(getArticles);
 
   constructor(private store: Store<State>) {}
 

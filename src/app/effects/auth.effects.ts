@@ -17,11 +17,11 @@ export class AuthEffects {
 
   @Effect()
   auth$ = this.actions$.pipe(
-    ofType(authActions.AuthActionTypes.AUTH),
-    switchMap((action: Auth) =>
+    ofType<Auth>(authActions.AuthActionTypes.AUTH),
+    switchMap(action =>
       this.authService.logIn(action.payload).pipe(
         map(authUser => new authActions.AuthSuccess(authUser)),
-        tap((action: AuthSuccess) => {
+        tap(action => {
           localStorage.setItem(lsTokenName, JSON.stringify(action.payload));
           this.router.navigateByUrl('/article');
         }),
