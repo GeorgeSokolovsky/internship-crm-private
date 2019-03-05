@@ -1,11 +1,11 @@
 import { Router } from '@angular/router';
-import { Article } from './article';
 import {
   Component,
   OnInit,
   Input,
   ChangeDetectionStrategy,
 } from '@angular/core';
+import { Article } from '../models/article.model';
 
 @Component({
   selector: 'app-article',

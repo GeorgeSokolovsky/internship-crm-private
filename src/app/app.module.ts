@@ -1,3 +1,6 @@
+import { AuthEffects } from './effects/auth.effects';
+import { environment } from '../environments/environment';
+import { ArticleEffects } from './effects/article.effects';
 import { TokenExpiredInterceptor } from './auth/token-expired.interceptor';
 import { TokenInterceptor } from './auth/token.interceptor';
 import { AuthModule } from './auth/auth.module';
@@ -13,6 +16,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SignUpModule } from './sign-up/sign-up.module';
 import { SignUpDialogComponent } from './sign-up-dialog/sign-up-dialog.component';
+import { StoreModule } from '@ngrx/store';
+import { articleReducer } from './reducers/acticle.reducers';
+import { EffectsModule } from '@ngrx/effects';
+import { AppEffects } from './app.effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { authReducer } from './reducers/auth.reducers';
+
+const storeDevTools = [];
+
+if (!environment.production) {
+  storeDevTools.push(StoreDevtoolsModule.instrument());
+}
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +41,12 @@ import { SignUpDialogComponent } from './sign-up-dialog/sign-up-dialog.component
     ArticleEditorModule,
     AddCategoryModule,
     AppRoutingModule,
+    StoreDevtoolsModule.instrument(),
+    StoreModule.forRoot({
+      article: articleReducer,
+      auth: authReducer,
+    }),
+    EffectsModule.forRoot([ArticleEffects, AuthEffects]),
   ],
   providers: [
     {

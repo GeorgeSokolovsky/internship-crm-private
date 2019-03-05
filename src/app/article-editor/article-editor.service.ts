@@ -7,16 +7,16 @@ import { HttpClient } from '@angular/common/http';
 import * as config from '../../assets/config.json';
 import { httpOptions } from '../constants';
 import { Observable, from } from 'rxjs';
+import { Article } from '../models/article.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ArticleEditorService {
   constructor(private httpClient: HttpClient) {}
 
-  addArticle(article: ArticleEditor): Observable<ArticleEditor> {
-    return this.httpClient.post<ArticleEditor>(
-      config.API.ARTICLE_POST,
-      article,
-    );
+  addArticle(article: Article): Observable<Article> {
+    return this.httpClient.post<Article>(config.API.ARTICLE_POST, article);
   }
 
   updateArticle(id: string, article: ArticleEditor): Observable<ArticleEditor> {
