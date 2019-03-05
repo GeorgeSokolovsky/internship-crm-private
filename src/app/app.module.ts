@@ -1,3 +1,4 @@
+import { AuthEffects } from './effects/auth.effects';
 import { environment } from '../environments/environment';
 import { ArticleEffects } from './effects/article.effects';
 import { TokenExpiredInterceptor } from './auth/token-expired.interceptor';
@@ -20,6 +21,7 @@ import { articleReducer } from './reducers/acticle.reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './app.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { authReducer } from './reducers/auth.reducers';
 
 const storeDevTools = [];
 
@@ -42,8 +44,9 @@ if (!environment.production) {
     StoreDevtoolsModule.instrument(),
     StoreModule.forRoot({
       article: articleReducer,
+      auth: authReducer,
     }),
-    EffectsModule.forRoot([ArticleEffects]),
+    EffectsModule.forRoot([ArticleEffects, AuthEffects]),
   ],
   providers: [
     {

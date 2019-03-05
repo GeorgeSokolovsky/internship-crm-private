@@ -1,18 +1,16 @@
+import { State } from './../state/state';
+import { Store } from '@ngrx/store';
 import { checkValidFormGroup, FieldErrorChecker } from './../utils';
-import { UserAuth } from './user-auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from './auth.service';
 import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
   OnDestroy,
 } from '@angular/core';
-import { lsTokenName } from '../constants';
-import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
-
+import * as authActions from './../actions/auth.actions';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
@@ -23,11 +21,10 @@ export class AuthComponent implements OnInit, OnDestroy {
   authForm: FormGroup;
   private readonly destroy$: Subject<boolean> = new Subject<boolean>();
   isFieldInvalid: FieldErrorChecker;
-
   constructor(
-    private authService: AuthService,
     private formBuilder: FormBuilder,
     private router: Router,
+    private store: Store<State>,
   ) {}
 
   ngOnInit() {
@@ -44,13 +41,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   auth() {
-    this.authService
-      .logIn(this.authForm.value)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((userAuth: UserAuth) => {
-        localStorage.setItem(lsTokenName, JSON.stringify(userAuth));
-        this.router.navigateByUrl('/article');
-      });
+    this.store.dispatch(new authActions.Auth(this.authForm.value));
   }
 
   toSignUp() {
