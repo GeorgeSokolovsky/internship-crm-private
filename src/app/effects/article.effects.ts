@@ -6,10 +6,7 @@ import { Add, LoadOne, Update } from './../actions/article.actions';
 import { switchMap, map, catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import * as articleActions from './../actions/article.actions';
-import { Article } from '../models/article.model';
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class ArticleEffects {
   constructor(
     private actions$: Actions,
@@ -33,7 +30,7 @@ export class ArticleEffects {
     ofType(articleActions.ArticleActionTypes.ADD),
     switchMap((action: Add) =>
       this.articleEditorService.addArticle(action.payload).pipe(
-        map((article: Article) => new articleActions.AddSuccess()),
+        map(() => new articleActions.AddSuccess()),
         catchError(() => of(new articleActions.AddedFail())),
       ),
     ),
@@ -44,7 +41,7 @@ export class ArticleEffects {
     ofType(articleActions.ArticleActionTypes.LOAD_ONE),
     switchMap((action: LoadOne) =>
       this.articleEditorService.getArticleById(action.payload).pipe(
-        map((article: Article) => new articleActions.LoadOneSuccess(article)),
+        map(article => new articleActions.LoadOneSuccess(article)),
         catchError(() => of(new articleActions.LoadOneFail())),
       ),
     ),

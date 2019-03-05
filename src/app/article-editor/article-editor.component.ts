@@ -1,4 +1,4 @@
-import { getLoadArticle } from './../selectors/article.selectors';
+import { getCurrentArticle } from './../selectors/article.selectors';
 import { State } from './../state/state';
 import { Article } from './../models/article.model';
 import { Store } from '@ngrx/store';
@@ -23,7 +23,6 @@ import * as articleActions from './../actions/article.actions';
   selector: 'app-article-editor',
   templateUrl: './article-editor.component.html',
   styleUrls: ['./article-editor.component.scss'],
-  providers: [ArticleEditorService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArticleEditorComponent implements OnInit, OnDestroy {
@@ -32,7 +31,7 @@ export class ArticleEditorComponent implements OnInit, OnDestroy {
   filteredOptions$: Observable<CategorySearch[]>;
   articleId: string;
   isFieldInvalid: FieldErrorChecker;
-  article$: Observable<Article>;
+  article$: Observable<Article> = this.store.select(getCurrentArticle);
 
   private readonly destroy$ = new Subject<boolean>();
 
@@ -63,9 +62,11 @@ export class ArticleEditorComponent implements OnInit, OnDestroy {
 
     if (this.articleId) {
       this.store.dispatch(new articleActions.LoadOne(this.articleId));
-      this.article$ = this.store.select(getLoadArticle);
       this.article$
-        .pipe(filter(data => data !== null))
+        .pipe(
+          filter(data => data !== null),
+          takeUntil(this.destroy$),
+        )
         .subscribe(article => this.articleForm.patchValue(article));
     }
 

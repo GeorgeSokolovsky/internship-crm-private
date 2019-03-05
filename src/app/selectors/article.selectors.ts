@@ -8,7 +8,7 @@ export const getArticles = createSelector(
   (state: State) => state.articles,
 );
 
-export const getLoadArticle = createSelector(
+export const getCurrentArticle = createSelector(
   getArticle,
-  (state: State) => state.loadArticle,
+  (state: State) => state.currentArticle,
 );

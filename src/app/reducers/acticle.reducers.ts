@@ -12,13 +12,13 @@ export function articleReducer(
       return {
         ...state,
         articles: [...action.payload],
-        loadArticle: null,
+        currentArticle: null,
       };
     case ArticleActionTypes.LOAD_ONE_SUCCESS: {
       return {
         ...state,
         articles: [...state.articles],
-        loadArticle: action.payload,
+        currentArticle: action.payload,
       };
     }
     default:

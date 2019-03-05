@@ -10,16 +10,14 @@ import { Article } from '../models/article.model';
   selector: 'app-articles',
   templateUrl: './articles.component.html',
   styleUrls: ['./articles.component.scss'],
-  providers: [ArticlesService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArticlesComponent implements OnInit {
-  articles$: Observable<Article[]>;
+  articles$: Observable<Article[]> = this.store.select(getArticles);
 
   constructor(private store: Store<State>) {}
 
   ngOnInit() {
     this.store.dispatch(new articleActions.LoadAll());
-    this.articles$ = this.store.select(getArticles);
   }
 }

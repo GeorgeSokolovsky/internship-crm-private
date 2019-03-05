@@ -1,10 +1,10 @@
 import { Article } from './../models/article.model';
 export interface State {
   readonly articles: Article[];
-  readonly loadArticle: Article;
+  readonly currentArticle: Article;
 }
 
 export const initialState: State = {
   articles: [],
-  loadArticle: null,
+  currentArticle: null,
 };

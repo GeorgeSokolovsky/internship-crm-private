@@ -19,7 +19,7 @@ export enum ArticleActionTypes {
 export class Add implements Action {
   readonly type = ArticleActionTypes.ADD;
 
-  constructor(public payload: Article) {}
+  constructor(readonly payload: Article) {}
 }
 
 export class AddSuccess implements Action {
@@ -33,7 +33,7 @@ export class AddedFail implements Action {
 export class Update implements Action {
   readonly type = ArticleActionTypes.UPDATE;
 
-  constructor(public payload: { id: string; article: Article }) {}
+  constructor(readonly payload: { id: string; article: Article }) {}
 }
 
 export class UpdateSuccess implements Action {
@@ -51,7 +51,7 @@ export class LoadAll implements Action {
 export class LoadAllSuccess implements Action {
   readonly type = ArticleActionTypes.LOAD_ALL_SUCCESS;
 
-  constructor(public payload: Article[]) {}
+  constructor(readonly payload: Article[]) {}
 }
 
 export class LoadAllFail implements Action {
@@ -61,13 +61,13 @@ export class LoadAllFail implements Action {
 export class LoadOne implements Action {
   readonly type = ArticleActionTypes.LOAD_ONE;
 
-  constructor(public payload: string) {}
+  constructor(readonly payload: string) {}
 }
 
 export class LoadOneSuccess implements Action {
   readonly type = ArticleActionTypes.LOAD_ONE_SUCCESS;
 
-  constructor(public payload: Article) {}
+  constructor(readonly payload: Article) {}
 }
 
 export class LoadOneFail implements Action {
