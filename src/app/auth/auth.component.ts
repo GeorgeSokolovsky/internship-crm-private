@@ -1,3 +1,4 @@
+import { tap, takeUntil, switchMap } from 'rxjs/operators';
 import { State } from './../state/state';
 import { Store } from '@ngrx/store';
 import { checkValidFormGroup, FieldErrorChecker } from './../utils';
@@ -8,9 +9,11 @@ import {
   ChangeDetectionStrategy,
   OnDestroy,
 } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import * as authActions from './../actions/auth.actions';
+import { getAuthError } from '../selectors/auth.selectors';
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
@@ -20,7 +23,9 @@ import * as authActions from './../actions/auth.actions';
 export class AuthComponent implements OnInit, OnDestroy {
   authForm: FormGroup;
   private readonly destroy$: Subject<boolean> = new Subject<boolean>();
+  private readonly isUserInvalid$: Subject<boolean> = new Subject<boolean>();
   isFieldInvalid: FieldErrorChecker;
+  authError$: Observable<Error> = this.store.select(getAuthError);
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -41,6 +46,13 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   auth() {
+    this.authError$
+      .pipe(
+        tap(err => this.isUserInvalid$.next(err instanceof HttpErrorResponse)),
+        switchMap(() => this.isUserInvalid$),
+      )
+      .subscribe();
+
     this.store.dispatch(new authActions.Auth(this.authForm.value));
   }
 

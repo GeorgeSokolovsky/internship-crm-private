@@ -1,7 +1,5 @@
 import { Router } from '@angular/router';
 import { lsTokenName } from './../constants';
-import { State } from './../state/state';
-import { Store } from '@ngrx/store';
 import { switchMap, map, catchError, tap } from 'rxjs/operators';
 import { AuthService } from './../auth/auth.service';
 import { Actions, Effect, ofType } from '@ngrx/effects';
