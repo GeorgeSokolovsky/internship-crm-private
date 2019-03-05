@@ -50,6 +50,7 @@ export class AuthComponent implements OnInit, OnDestroy {
       .pipe(
         tap(err => this.isUserInvalid$.next(err instanceof HttpErrorResponse)),
         switchMap(() => this.isUserInvalid$),
+        takeUntil(this.destroy$),
       )
       .subscribe();
 
