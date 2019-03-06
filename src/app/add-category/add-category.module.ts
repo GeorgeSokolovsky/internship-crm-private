@@ -1,3 +1,5 @@
+import { AddCategoryRoutingModule } from './add-category-routing.module';
+import { CommonModule } from '@angular/common';
 import {
   MatButtonModule,
   MatFormFieldModule,
@@ -6,17 +8,16 @@ import {
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { AddCategoryComponent } from './add-category.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AddCategoryComponent],
   imports: [
+    CommonModule,
+    AddCategoryRoutingModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
   ],
-  exports: [AddCategoryComponent],
 })
 export class AddCategoryModule {}

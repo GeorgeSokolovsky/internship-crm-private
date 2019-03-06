@@ -1,3 +1,5 @@
+import { ArticleEditorRoutingModule } from './article-editor-routing.module';
+import { CommonModule } from '@angular/common';
 import {
   MatButtonModule,
   MatFormFieldModule,
@@ -7,18 +9,17 @@ import {
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { ArticleEditorComponent } from './article-editor.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [ArticleEditorComponent],
   imports: [
+    CommonModule,
+    ArticleEditorRoutingModule,
     MatButtonModule,
     MatFormFieldModule,
     MatAutocompleteModule,
     MatInputModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
   ],
-  exports: [ArticleEditorComponent],
 })
 export class ArticleEditorModule {}
