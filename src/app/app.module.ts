@@ -1,3 +1,4 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthEffects } from './effects/auth.effects';
 import { environment } from '../environments/environment';
 import { ArticleEffects } from './effects/article.effects';
@@ -15,11 +16,9 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SignUpModule } from './sign-up/sign-up.module';
-import { SignUpDialogComponent } from './sign-up-dialog/sign-up-dialog.component';
 import { StoreModule } from '@ngrx/store';
 import { articleReducer } from './reducers/acticle.reducers';
 import { EffectsModule } from '@ngrx/effects';
-import { AppEffects } from './app.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { authReducer } from './reducers/auth.reducers';
 
@@ -33,13 +32,11 @@ if (!environment.production) {
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     MenuModule,
     AuthModule,
     SignUpModule,
-    ArticlesModule,
-    ArticleEditorModule,
-    AddCategoryModule,
     AppRoutingModule,
     StoreDevtoolsModule.instrument(),
     StoreModule.forRoot({

@@ -11,17 +11,19 @@ import {
 import { RouterModule } from '@angular/router';
 import { SignUpComponent } from './sign-up.component';
 import { SignUpDialogComponent } from '../sign-up-dialog/sign-up-dialog.component';
+import { SugnUpRoutingModule } from './sign-up-routing.module';
 
 @NgModule({
   declarations: [SignUpComponent, SignUpDialogComponent],
   imports: [
+    CommonModule,
+    SugnUpRoutingModule,
     RouterModule,
     MatDialogModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
   ],
   entryComponents: [SignUpDialogComponent],
   exports: [SignUpComponent],
