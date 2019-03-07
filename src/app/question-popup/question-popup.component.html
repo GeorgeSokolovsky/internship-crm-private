@@ -1,0 +1,17 @@
+<form [formGroup]="questionForm" (ngSubmit)="send()">
+  <h4>Your favorite site section?</h4>
+  <mat-form-field>
+    <mat-select formControlName="answer">
+      <mat-option value="Add article">Add article</mat-option>
+      <mat-option value="Update article">Update article</mat-option>
+      <mat-option value="View articles">View articles</mat-option>
+      <mat-option value="Add category">Add category</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-button [disabled]="questionForm.invalid">Send feedback</button>
+</form>
+<mat-hint>{{ time }}</mat-hint>
+<button mat-button (click)="close()" [disabled]="disable$ | async">
+  Close
+</button>
