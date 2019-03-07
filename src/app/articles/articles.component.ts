@@ -1,11 +1,10 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { Subject, timer } from 'rxjs';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
@@ -21,9 +20,9 @@ import { State } from './../state/state';
   styleUrls: ['./articles.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ArticlesComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ArticlesComponent implements OnInit, OnDestroy {
   articles$ = this.store.select(getArticles);
-  dialogRef;
+  dialogRef: MatDialogRef<GreetingPopupComponent | QuestionPopupComponent>;
   private readonly destroy$ = new Subject<boolean>();
   constructor(public dialog: MatDialog, private store: Store<State>) {}
 
@@ -49,9 +48,6 @@ export class ArticlesComponent implements OnInit, AfterViewInit, OnDestroy {
         .subscribe();
     });
   }
-
-  ngAfterViewInit() {}
-
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();

@@ -1,4 +1,9 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  OnInit,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { BehaviorSubject, Subject, timer } from 'rxjs';
@@ -16,6 +21,7 @@ import {
   selector: 'app-question-popup',
   templateUrl: './question-popup.component.html',
   styleUrls: ['./question-popup.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QuestionPopupComponent implements OnInit {
   private secondsLeft = 5;
